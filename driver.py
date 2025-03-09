@@ -14,7 +14,7 @@ def select_from_history(history):
         if choice == "N" or choice == "n":
             return None
         
-        if choice == "Y" or choice == "t":
+        if choice == "Y" or choice == "y":
             choice = input("Select String: ").strip()
             if choice.isdigit() and 1 <= int(choice) <= len(history):
                 return history[int(choice) - 1]
@@ -42,10 +42,10 @@ def main():
             selected = select_from_history(history)
             if selected is None:
                 password = input("Enter new password: ").strip().upper()
-                encryptor.stdin.write(f"PASSKEY {password}\n")
+                encryptor.stdin.write(f"PASS {password}\n")
                 encryptor.stdin.flush()
             else:
-                encryptor.stdin.write(f"PASSKEY {selected}\n")
+                encryptor.stdin.write(f"PASS {selected}\n")
                 encryptor.stdin.flush()
         
         elif command == "ENCRYPT" or command == "DECRYPT":
@@ -62,8 +62,10 @@ def main():
                 encryptor.stdin.write(f"DECRYPT {text}\n")
             encryptor.stdin.flush()
 
-            result = encryptor.stdout.readline().strip()
-            encryptor.stdout.flush()
+            while True:
+                result = encryptor.stdout.readline().strip()
+                if result.startswith("RESULT"):
+                    break
             
             print(result)
             
