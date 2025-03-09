@@ -36,7 +36,7 @@ def main():
             if command == "QUIT":
                 break
             
-            elif command == "PASSKEY":
+            elif command == "PASS":
                 if argument is None:
                     print("ERROR No passkey provided")
                 else:
